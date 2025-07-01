@@ -24,7 +24,7 @@ conn_str = f"DSN={dsn};DATABASE={database};UID={user};PWD={password};"
 
 try:
     # Connect to ODBC source
-    conn = pyodbc.connect(conn_str)
+    conn = pyodbc.connect(conn_str) 
 
     print("Connection successful!")
 
