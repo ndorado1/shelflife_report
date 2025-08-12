@@ -22,3 +22,4 @@ pip-delete-this-directory.txt
 src/data/raw/rim_ra_action.csv
 src/data/raw/rim_ref_master.csv
 .DS_Store
+src/ODBC/data/raw/LATAM_ra_action_licenses_details.csv
