@@ -19,3 +19,6 @@ pip-delete-this-directory.txt
 # Streamlit
 .streamlit/
 # Ignorar archivos Parquet grandes
+src/data/raw/rim_ra_action.csv
+src/data/raw/rim_ref_master.csv
+.DS_Store
