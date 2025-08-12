@@ -14,16 +14,37 @@ st.title("RIM License Shelf Life Product – Report")
 
 with st.sidebar:
     st.header("Data Source")
-    default_parquet = \
-        "/Users/personal/Library/CloudStorage/OneDrive-JNJ/Documentos/ODBC/src/data/processed/rim_license_product_filtered/parquet_selected_cols/rim_filtered.parquet"
+    # Buscar parquet en rutas relativas del repo para despliegue en Streamlit Cloud
+    base_dir_sidebar = Path(__file__).resolve().parents[1]
+    parquet_dir_candidates = [
+        base_dir_sidebar / "data" / "processed" / "rim_license_product_filtered" / "parquet_selected_cols",
+        base_dir_sidebar / "src" / "data" / "processed" / "rim_license_product_filtered" / "parquet_selected_cols",
+        Path(__file__).parent / "data" / "processed" / "rim_license_product_filtered" / "parquet_selected_cols",
+    ]
+
+    default_parquet = ""
+    for d in parquet_dir_candidates:
+        if d.exists() and d.is_dir():
+            # Preferimos un archivo llamado rim_filtered.parquet si existe; si no, tomamos el primero
+            preferred = d / "rim_filtered.parquet"
+            if preferred.exists():
+                default_parquet = str(preferred)
+                break
+            parquet_files = sorted(d.glob("*.parquet"))
+            if parquet_files:
+                default_parquet = str(parquet_files[0])
+                break
 
     st.info("**Source:** Parquet file")
-    st.code(default_parquet, language=None)
-    if Path(default_parquet).exists():
-        file_size = Path(default_parquet).stat().st_size / (1024*1024)  # MB
-        st.caption(f"File size: {file_size:.1f} MB")
-    else:
-        st.warning("File not found at expected location")
+    st.code(default_parquet or "(no encontrado)", language=None)
+    try:
+        if default_parquet and Path(default_parquet).exists():
+            file_size = Path(default_parquet).stat().st_size / (1024*1024)  # MB
+            st.caption(f"File size: {file_size:.1f} MB")
+        else:
+            st.warning("Parquet no encontrado en las rutas esperadas. Verifica que exista en `src/data/processed/rim_license_product_filtered/parquet_selected_cols`. ")
+    except Exception:
+        pass
     
     data_info = {"mode": "parquet", "path": default_parquet}
 
