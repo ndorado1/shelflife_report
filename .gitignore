@@ -1,0 +1,21 @@
+# Ignorar archivos CSV en la carpeta de datos procesados
+src/data/processed/rim_license_product_filtered/*.csv
+
+# Ignorar archivos temporales y de sistema
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.idea/
+.vscode/
+
+# Streamlit
+.streamlit/
+# Ignorar archivos Parquet grandes
